@@ -1,0 +1,577 @@
+<style>
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+.hb-app {
+  --ink: #16302e;
+  --ink-soft: #4d635f;
+  --line: #d7e0dc;
+  --paper: #f3f6f4;
+  --card: #ffffff;
+  --teal: #1f5c56;
+  --teal-deep: #123f3a;
+  --amber: #b9762f;
+  --amber-bg: #fbf0e2;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Pretendard Variable', Pretendard, -apple-system, sans-serif;
+
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--paper);
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.hb-app * { box-sizing: border-box; }
+
+/* ---------- HEADER ---------- */
+.hb-head {
+  background: var(--teal-deep);
+  color: #eef5f3;
+  padding: 26px 28px 22px;
+  position: relative;
+}
+.hb-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8fbcb4;
+  margin-bottom: 6px;
+}
+.hb-title {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+.hb-sub {
+  font-size: 12.5px;
+  color: #b7d3cd;
+}
+.hb-meta-row {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.hb-badge {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 5px 10px;
+  border-radius: 100px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.16);
+  color: #cfe6e1;
+}
+.hb-badge.live { border-color: #4fae9c; color: #7fe0c8; }
+.hb-badge.demo { border-color: #c98a4a; color: #f0b478; }
+.hb-btn {
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 7px 13px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.06);
+  color: #eef5f3;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.hb-btn:hover { background: rgba(255,255,255,0.14); }
+.hb-btn.primary {
+  background: #3d8b7f;
+  border-color: #3d8b7f;
+  color: #fff;
+}
+.hb-btn.primary:hover { background: #47a093; }
+
+/* ---------- CONNECT PANEL ---------- */
+.hb-connect {
+  margin-top: 16px;
+  padding: 14px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 10px;
+  display: none;
+}
+.hb-connect.open { display: block; }
+.hb-connect label {
+  font-size: 11.5px;
+  color: #b7d3cd;
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--mono);
+}
+.hb-connect-row { display: flex; gap: 8px; }
+.hb-connect input {
+  flex: 1;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  padding: 9px 11px;
+  border-radius: 7px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.18);
+  color: #eef5f3;
+  outline: none;
+}
+.hb-connect input:focus { border-color: #4fae9c; }
+.hb-connect-help {
+  font-size: 11.5px;
+  color: #8fb3ac;
+  margin-top: 8px;
+  line-height: 1.6;
+}
+.hb-connect-err { color: #e8a06a; margin-top: 6px; font-size: 11.5px; display: none; }
+
+/* ---------- BODY ---------- */
+.hb-body { display: flex; min-height: 520px; }
+
+.hb-nav {
+  width: 220px;
+  flex-shrink: 0;
+  background: #eaf0ed;
+  border-right: 1px solid var(--line);
+  padding: 14px 10px;
+}
+.hb-search {
+  width: 100%;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  padding: 8px 10px;
+  border-radius: 7px;
+  border: 1px solid var(--line);
+  margin-bottom: 12px;
+  outline: none;
+  background: #fff;
+}
+.hb-search:focus { border-color: var(--teal); }
+
+.hb-navitem {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  padding: 10px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 2px;
+  transition: background 0.12s;
+}
+.hb-navitem:hover { background: #dfe9e5; }
+.hb-navitem.active { background: var(--teal); }
+.hb-navitem.active .hb-navnum,
+.hb-navitem.active .hb-navlabel { color: #fff; }
+.hb-navnum {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: #7c948f;
+  font-weight: 600;
+}
+.hb-navlabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.3;
+}
+
+.hb-panel { flex: 1; padding: 22px 26px; overflow: hidden; }
+
+.hb-panel-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.hb-panel-num { font-family: var(--mono); font-size: 13px; color: var(--teal); font-weight: 700; }
+.hb-panel-title { font-size: 18px; font-weight: 800; }
+.hb-panel-count { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); margin-bottom: 18px; }
+
+.hb-group { margin-bottom: 18px; }
+.hb-group-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--teal-deep);
+  padding: 8px 0 8px 0;
+  border-bottom: 1.5px solid var(--line);
+  margin-bottom: 8px;
+}
+.hb-item {
+  display: flex;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.hb-item:hover { background: #eef4f2; }
+.hb-item.flag { background: var(--amber-bg); }
+.hb-item.flag:hover { background: #f6e4cc; }
+.hb-mark {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--teal);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.hb-item.flag .hb-mark { color: var(--amber); }
+.hb-item-note {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--amber);
+  border: 1px solid #e3bf90;
+  border-radius: 5px;
+  padding: 1px 6px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.hb-links { display: flex; flex-wrap: wrap; gap: 8px; }
+.hb-link {
+  font-size: 12.5px;
+  padding: 8px 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--teal-deep);
+  text-decoration: none;
+  font-weight: 600;
+}
+.hb-link:hover { border-color: var(--teal); background: #eef4f2; }
+
+.hb-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+.hb-empty b { color: var(--ink); }
+
+.hb-foot {
+  padding: 10px 26px;
+  border-top: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--ink-soft);
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 640px) {
+  .hb-body { flex-direction: column; }
+  .hb-nav { width: 100%; display: flex; overflow-x: auto; gap: 4px; border-right: none; border-bottom: 1px solid var(--line); }
+  .hb-navitem { flex-shrink: 0; }
+}
+</style>
+
+<div class="hb-app" id="hbApp">
+  <div class="hb-head">
+    <div class="hb-eyebrow">2026 School Health · 학생건강증진 업무 매뉴얼</div>
+    <div class="hb-title">보건 주요 업무 가이드</div>
+    <div class="hb-sub">신규 보건교사를 위한 연간 업무 인덱스 — 구글 시트를 수정하면 이 화면도 함께 바뀝니다.</div>
+    <div class="hb-meta-row">
+      <span class="hb-badge demo" id="hbStatusBadge">샘플 데이터 표시 중</span>
+      <span class="hb-badge" id="hbUpdatedBadge">마지막 업데이트 —</span>
+      <button class="hb-btn" id="hbToggleConnect" type="button">구글 시트 연결</button>
+      <button class="hb-btn primary" id="hbRefresh" type="button">새로고침</button>
+    </div>
+    <div class="hb-connect" id="hbConnect">
+      <label>Apps Script 웹앱 URL 또는 구글 시트 공유 링크</label>
+      <div class="hb-connect-row">
+        <input id="hbSheetInput" type="text" placeholder="https://script.google.com/macros/s/xxxx/exec">
+        <button class="hb-btn primary" id="hbConnectBtn" type="button">연결하기</button>
+      </div>
+      <div class="hb-connect-help">
+        <b>① GAS 웹앱 URL(권장)</b> — Apps Script에서 [배포 → 새 배포 → 웹 앱]으로 배포한 뒤 나오는 <code>.../exec</code> 주소를 붙여넣으세요.<br>
+        <b>② 구글 시트 공유 링크</b> — "웹에 게시" 또는 "링크가 있는 모든 사용자"로 공개한 시트 링크도 사용할 수 있습니다.<br>
+        매번 붙여넣기 번거롭다면, HTML 코드 상단의 <code>CONFIG.SOURCE_URL</code> 에 URL을 직접 넣어두면 페이지가 열릴 때 자동으로 연결됩니다.
+      </div>
+      <div class="hb-connect-err" id="hbConnectErr"></div>
+    </div>
+  </div>
+
+  <div class="hb-body">
+    <div class="hb-nav">
+      <input class="hb-search" id="hbSearch" type="text" placeholder="업무 내용 검색...">
+      <div id="hbNavList"></div>
+    </div>
+    <div class="hb-panel" id="hbPanel"></div>
+  </div>
+
+  <div class="hb-foot">
+    <span id="hbFootLeft">2026 학생건강증진교육 컨설팅</span>
+    <span id="hbFootRight">항목 0개</span>
+  </div>
+</div>
+
+<script>
+(function () {
+  const root = document.getElementById('hbApp');
+
+  // =========================================================
+  // CONFIG — 여기에 Apps Script 웹앱 배포 URL을 직접 붙여넣으세요.
+  // (.gs 파일에서 [배포] → [새 배포] → 웹 앱 으로 배포한 뒤 나오는
+  //  https://script.google.com/macros/s/xxxx/exec 형태의 주소)
+  // 비워두면 화면의 "구글 시트 연결" 버튼으로 런타임에 연결할 수 있습니다.
+  // =========================================================
+  const CONFIG = {
+    SOURCE_URL: ''  // 예: 'https://script.google.com/macros/s/AKfycb.../exec'
+  };
+
+  // ---------- fallback sample data (matches 신규교사 연수물 내용) ----------
+  const FALLBACK_ROWS = [
+    ["보건계획","보건교육 및 양성평등 계획","보건교육 1개 학년 이상 17시간 이상 편성",""],
+    ["보건계획","보건교육 및 양성평등 계획","심폐소생술 등 응급처치교육 최소 2개 학년 이상 실습 포함, 학년별 2시간 이상",""],
+    ["보건계획","보건교육 및 양성평등 계획","마약류·흡연·음주 등 약물 오남용 예방교육 연간 7시간",""],
+    ["보건계획","보건교육 및 양성평등 계획","감염병 예방 교육 연간 4시간 이상",""],
+    ["보건계획","보건교육 및 양성평등 계획","건강한 체중관리(저체중·비만) 및 구강관리 교육 각각 연간 1시간 이상",""],
+    ["보건계획","보건교육 및 양성평등 계획","양성평등교육 학년별 연간 15시간 (성폭력예방 4차시, 디지털성폭력 1차시 포함 / 성매매예방 1차시)",""],
+    ["보건계획","그 외 수립 계획","감염병 예방 관리 계획 / 성희롱·성폭력·성매매 예방 및 2차피해 예방 계획 / 학교보건 및 건강증진 운영계획",""],
+    ["보건계획","그 외 수립 계획","학생 건강검사 계획 / 자동심장충격기관리 계획 / 교직원 대상 심폐소생술 계획 / 흡연예방 금연실천 사업 계획",""],
+
+    ["건강요주의자 관리","조사","학년 초 전교생 건강요주의자 조사 실시, 응급처치 동의서(서면) 받기",""],
+    ["건강요주의자 관리","조사","건강요주의자 조사 시 흡연·미세먼지·아토피·천식 실태조사 내용 함께 집계",""],
+    ["건강요주의자 관리","명단 관리","교장·교감과 상의하여 명단 파일 전체공유 범위 확인받기","주의"],
+    ["건강요주의자 관리","명단 관리","개인정보가 유출되지 않도록 주의","주의"],
+    ["건강요주의자 관리","의료 연계","환자 의뢰를 위한 인근 의료기관 탐색 및 협조체제 강화",""],
+
+    ["건강검진 및 별도검사","건강검진 (1학년)","검진기관 선정 및 계약, 관련 서류는 행정실에서 처리",""],
+    ["건강검진 및 별도검사","건강검진 (1학년)","가정통신문 발송 후 기한 내 완료 독려, 결과는 나이스-건강기록부에 신속 입력",""],
+    ["건강검진 및 별도검사","건강검진 (1학년)","결과 이상자는 재검하도록 가정통신문으로 안내",""],
+    ["건강검진 및 별도검사","키·몸무게 측정 (1~3학년)","체육교사 협조로 PAPS 기록 불러오기, 1학년은 건강검진 결과로 대체",""],
+    ["건강검진 및 별도검사","별도검사 (2~3학년)","소변검사·흉부 X-ray(결핵) 일정을 공문으로 안내",""],
+    ["건강검진 및 별도검사","별도검사 (2~3학년)","미검진 학생은 지역보건소 연계, 기숙사 입사생은 입소 전 검사로 대체 가능",""],
+
+    ["교직원 연수","4대폭력 예방교육","전교(직)원 대상 성희롱·성폭력·성매매 예방 각 1시간 이상 (가정폭력 포함), 전북연수포털로 대체 가능",""],
+    ["교직원 연수","4대폭력 예방교육","고위직(교장·교감·행정실장)은 성폭력·성희롱 각 1시간씩 대면교육 별도 이수","주의"],
+    ["교직원 연수","4대폭력 예방교육","부진기관 기준: 총점 70점 미만, 고위직 80% 미만 이수 등 — 이수율 관리 필요","주의"],
+    ["교직원 연수","기타 필수 연수","심폐소생술 교육 실습포함 3시간(외부강사), 미이수자 2명 이상 시 교육지원청 점검",""],
+    ["교직원 연수","기타 필수 연수","감염병 예방교육·모의훈련 연중 1회, 흡연·음주 예방 연수",""],
+
+    ["감염병 관리","대응 절차","법정 감염병 발생 시 즉시 등교 중지, 나이스 입력·보고",""],
+    ["감염병 관리","즉시 신고 대상","결핵·홍역·콜레라·장티푸스·파라티푸스·세균성이질·장출혈성대장균감염증·A형간염 — 보건소 및 도교육청 동시 신고","주의"],
+    ["감염병 관리","방역물품","마스크·손소독제 등 비축 기준에 따라 학기 초 재고 점검",""],
+
+    ["기타 업무","보건일지","수기 작성 가능, 온라인 사용 시 개인정보 수탁처리 내부기안 및 동의서 학기초 수합",""],
+    ["기타 업무","헌혈·잠복결핵검사","헌혈 연 2회(봉사 4시간) / 신규채용 교직원 잠복결핵검사 1개월 이내 실시(비용 학교지원)",""],
+    ["기타 업무","흡연예방","학교흡연예방사업 우수 사례집을 참고하여 행사 운영",""],
+
+    ["참고 사이트","바로가기","학생건강정보센터|http://www.schoolhealth.kr",""],
+    ["참고 사이트","바로가기","국가건강정보포털|https://health.kdca.go.kr/healthinfo/",""],
+    ["참고 사이트","바로가기","질병관리청|http://www.kdca.go.kr",""],
+    ["참고 사이트","바로가기","전북보건교사회|http://www.jbbogun.co.kr/",""],
+    ["참고 사이트","바로가기","전국보건교사회|http://koreanhta.org",""]
+  ];
+
+  let state = { grouped: [], activeIdx: 0, isLive: false };
+
+  // ---------- tiny CSV parser (handles quoted fields with commas/newlines) ----------
+  function parseCSV(text) {
+    const rows = [];
+    let row = [], field = '', inQuotes = false;
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i], n = text[i + 1];
+      if (inQuotes) {
+        if (c === '"' && n === '"') { field += '"'; i++; }
+        else if (c === '"') { inQuotes = false; }
+        else { field += c; }
+      } else {
+        if (c === '"') inQuotes = true;
+        else if (c === ',') { row.push(field); field = ''; }
+        else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
+        else if (c === '\r') { /* skip */ }
+        else field += c;
+      }
+    }
+    if (field.length || row.length) { row.push(field); rows.push(row); }
+    return rows.filter(r => r.some(c => c.trim() !== ''));
+  }
+
+  function extractSheetId(url) {
+    const m = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+    return m ? m[1] : null;
+  }
+  function extractGid(url) {
+    const m = url.match(/[#&?]gid=([0-9]+)/);
+    return m ? m[1] : null;
+  }
+
+  function buildGroups(rows) {
+    // rows: [대분류, 소제목, 내용, 비고]
+    const map = new Map();
+    rows.forEach(r => {
+      const [cat, sub, content, note] = [r[0]||'', r[1]||'', r[2]||'', r[3]||''];
+      if (!cat || !content) return;
+      if (!map.has(cat)) map.set(cat, new Map());
+      const subMap = map.get(cat);
+      if (!subMap.has(sub)) subMap.set(sub, []);
+      subMap.get(sub).push({ content: content.trim(), note: note.trim() });
+    });
+    return Array.from(map.entries()).map(([cat, subMap]) => ({
+      cat,
+      subs: Array.from(subMap.entries()).map(([sub, items]) => ({ sub, items }))
+    }));
+  }
+
+  function totalItems(groups) {
+    return groups.reduce((s, g) => s + g.subs.reduce((s2, sg) => s2 + sg.items.length, 0), 0);
+  }
+
+  function render() {
+    const navList = root.querySelector('#hbNavList');
+    const panel = root.querySelector('#hbPanel');
+    navList.innerHTML = '';
+    state.grouped.forEach((g, idx) => {
+      const el = document.createElement('div');
+      el.className = 'hb-navitem' + (idx === state.activeIdx ? ' active' : '');
+      el.innerHTML = `<span class="hb-navnum">0${idx + 1}</span><span class="hb-navlabel">${escapeHtml(g.cat)}</span>`;
+      el.addEventListener('click', () => { state.activeIdx = idx; render(); });
+      navList.appendChild(el);
+    });
+
+    const g = state.grouped[state.activeIdx];
+    if (!g) {
+      panel.innerHTML = `<div class="hb-empty">표시할 항목이 없습니다.<br><b>구글 시트 연결</b> 버튼을 눌러 데이터를 불러오세요.</div>`;
+    } else if (g.cat === '참고 사이트') {
+      panel.innerHTML = `
+        <div class="hb-panel-head"><span class="hb-panel-num">0${state.activeIdx + 1}</span><span class="hb-panel-title">${escapeHtml(g.cat)}</span></div>
+        <div class="hb-panel-count">${g.subs.reduce((s,sg)=>s+sg.items.length,0)}개 링크</div>
+        <div class="hb-links">` +
+        g.subs.flatMap(sg => sg.items).map(it => {
+          const [label, url] = it.content.split('|');
+          const safeUrl = (url || label || '#').trim();
+          return `<a class="hb-link" href="${escapeAttr(safeUrl)}" target="_blank" rel="noopener">${escapeHtml((label||safeUrl).trim())}</a>`;
+        }).join('') + `</div>`;
+    } else {
+      panel.innerHTML = `
+        <div class="hb-panel-head"><span class="hb-panel-num">0${state.activeIdx + 1}</span><span class="hb-panel-title">${escapeHtml(g.cat)}</span></div>
+        <div class="hb-panel-count">${g.subs.reduce((s,sg)=>s+sg.items.length,0)}개 항목</div>` +
+        g.subs.map(sg => `
+          <div class="hb-group">
+            <div class="hb-group-title">${escapeHtml(sg.sub || '기타')}</div>
+            ${sg.items.map(it => `
+              <div class="hb-item ${it.note ? 'flag' : ''}">
+                <span class="hb-mark">${it.note ? '!' : '·'}</span>
+                <span>${escapeHtml(it.content)}${it.note ? `<span class="hb-item-note">${escapeHtml(it.note)}</span>` : ''}</span>
+              </div>`).join('')}
+          </div>`).join('');
+    }
+
+    root.querySelector('#hbFootRight').textContent = `항목 ${totalItems(state.grouped)}개`;
+  }
+
+  function applySearch(query) {
+    const q = query.trim().toLowerCase();
+    if (!q) { state.grouped = buildGroups(state._rows); state.activeIdx = Math.min(state.activeIdx, Math.max(state.grouped.length-1,0)); render(); return; }
+    const filteredRows = state._rows.filter(r => (r[2]||'').toLowerCase().includes(q) || (r[1]||'').toLowerCase().includes(q));
+    state.grouped = buildGroups(filteredRows);
+    state.activeIdx = 0;
+    render();
+  }
+
+  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+  function escapeAttr(s) { return escapeHtml(s); }
+
+  function loadData(rows, isLive) {
+    state._rows = rows;
+    state.grouped = buildGroups(rows);
+    state.activeIdx = 0;
+    state.isLive = isLive;
+    root.querySelector('#hbStatusBadge').textContent = isLive ? '구글 시트 연결됨' : '샘플 데이터 표시 중';
+    root.querySelector('#hbStatusBadge').className = 'hb-badge ' + (isLive ? 'live' : 'demo');
+    root.querySelector('#hbUpdatedBadge').textContent = '마지막 업데이트 ' + new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+    render();
+  }
+
+  async function fetchSheet(csvUrl) {
+    const res = await fetch(csvUrl, { cache: 'no-store' });
+    if (!res.ok) throw new Error('시트를 불러오지 못했습니다 (' + res.status + ')');
+    const text = await res.text();
+    const rows = parseCSV(text);
+    // drop header row if it looks like a header
+    if (rows.length && /대분류/.test(rows[0][0] || '')) rows.shift();
+    if (!rows.length) throw new Error('시트에 데이터가 없습니다.');
+    return rows;
+  }
+
+  let currentSourceUrl = null;
+  let currentSourceType = null; // 'gas' | 'sheet'
+
+  function isGasUrl(url) {
+    return /script\.google\.com\/macros\//.test(url);
+  }
+
+  async function fetchGasJson(url) {
+    const res = await fetch(url, { cache: 'no-store' });
+    if (!res.ok) throw new Error('웹앱 응답 오류 (' + res.status + ')');
+    const data = await res.json();
+    if (!data || !Array.isArray(data.rows)) throw new Error('응답 형식이 올바르지 않습니다.');
+    return data.rows;
+  }
+
+  async function loadFromUrl(rawUrl) {
+    const url = rawUrl.trim();
+    if (isGasUrl(url)) {
+      const rows = await fetchGasJson(url);
+      currentSourceUrl = url;
+      currentSourceType = 'gas';
+      return rows;
+    }
+    const id = extractSheetId(url);
+    if (!id) throw new Error('올바른 링크가 아닙니다. (구글 시트 링크 또는 Apps Script 웹앱 URL)');
+    const gid = extractGid(url);
+    const csvUrl = `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:csv` + (gid ? `&gid=${gid}` : '');
+    const rows = await fetchSheet(csvUrl);
+    currentSourceUrl = csvUrl;
+    currentSourceType = 'sheet';
+    return rows;
+  }
+
+  async function connectFromUrl(rawUrl) {
+    const err = root.querySelector('#hbConnectErr');
+    err.style.display = 'none';
+    try {
+      const rows = await loadFromUrl(rawUrl);
+      loadData(rows, true);
+      root.querySelector('#hbConnect').classList.remove('open');
+    } catch (e) {
+      err.textContent = '불러오기에 실패했습니다. 웹앱이 "모든 사용자"로 배포되었는지, 또는 시트가 "링크가 있는 모든 사용자"로 공개되어 있는지 확인해주세요.';
+      err.style.display = 'block';
+    }
+  }
+
+  root.querySelector('#hbToggleConnect').addEventListener('click', () => {
+    root.querySelector('#hbConnect').classList.toggle('open');
+  });
+  root.querySelector('#hbConnectBtn').addEventListener('click', () => {
+    const v = root.querySelector('#hbSheetInput').value;
+    if (v.trim()) connectFromUrl(v.trim());
+  });
+  root.querySelector('#hbRefresh').addEventListener('click', async () => {
+    if (currentSourceUrl) {
+      try {
+        const rows = currentSourceType === 'gas' ? await fetchGasJson(currentSourceUrl) : await fetchSheet(currentSourceUrl);
+        loadData(rows, true);
+      } catch (e) { /* keep last good data */ }
+    } else {
+      loadData(FALLBACK_ROWS, false);
+    }
+  });
+  root.querySelector('#hbSearch').addEventListener('input', (e) => applySearch(e.target.value));
+
+  // 코드에 CONFIG.SOURCE_URL 이 설정되어 있으면 자동으로 연결
+  if (CONFIG.SOURCE_URL && CONFIG.SOURCE_URL.trim()) {
+    loadData(FALLBACK_ROWS, false);
+    root.querySelector('#hbSheetInput').value = CONFIG.SOURCE_URL.trim();
+    connectFromUrl(CONFIG.SOURCE_URL.trim());
+  } else {
+    loadData(FALLBACK_ROWS, false);
+  }
+})();
+</script>
