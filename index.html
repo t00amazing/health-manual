@@ -348,6 +348,40 @@
 }
 .hb-link:hover { border-color: var(--teal); background: #eef4f2; }
 
+.hb-refgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+.hb-refcard {
+  display: block;
+  padding: 12px 13px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  text-decoration: none;
+  transition: border-color 0.12s, background 0.12s;
+}
+.hb-refcard:hover { border-color: var(--teal); background: #eef4f2; }
+.hb-refcard-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--teal-deep);
+  margin-bottom: 4px;
+}
+.hb-refcard-desc {
+  font-size: 12px;
+  color: var(--ink);
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+.hb-refcard-url {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--ink-soft);
+  word-break: break-all;
+}
+
 .hb-empty {
   text-align: center;
   padding: 60px 20px;
@@ -401,6 +435,7 @@
   .hb-figure { margin-left: 0; }
   .hb-links { gap: 6px; }
   .hb-link { font-size: 12px; padding: 7px 10px; }
+  .hb-refgrid { grid-template-columns: 1fr; }
 
   .hb-foot { padding: 8px 16px; flex-direction: column; gap: 2px; }
 }
@@ -410,7 +445,7 @@
   <div class="hb-head">
     <div class="hb-eyebrow">School Health · 학생건강증진 업무 매뉴얼</div>
     <div class="hb-title">보건 주요 업무 가이드</div>
-    <div class="hb-sub">신규 보건교사를 위한 연간 업무 인덱스 — 구글 시트를 수정하면 이 화면도 함께 바뀝니다.</div>
+    <div class="hb-sub">신규 보건교사를 위한 연간 업무 인덱스</div>
     <div class="hb-meta-row">
       <span class="hb-badge demo" id="hbStatusBadge">샘플 데이터 표시 중</span>
       <span class="hb-badge" id="hbUpdatedBadge">마지막 업데이트 —</span>
@@ -458,7 +493,7 @@
   // 비워두면 화면의 "구글 시트 연결" 버튼으로 런타임에 연결할 수 있습니다.
   // =========================================================
   const CONFIG = {
-    SOURCE_URL: 'https://script.google.com/macros/s/AKfycbw0rrIZXG0vpzmaPLz4t12PpMci6mouq2n89lSm286b1hbfgWIOLfdMwh7PswOXDOze/exec'  // 예: 'https://script.google.com/macros/s/AKfycb.../exec'
+    SOURCE_URL: 'https://script.google.com/macros/s/AKfycbwzlMUM-GfTNH5SitFRUS9RU1NCoIbwnMrD_vk2tcKfDlo96QDKN6ovrjsZbNmoNU5x/exec'  // 예: 'https://script.google.com/macros/s/AKfycb.../exec'
   };
 
   const panelEl = root.querySelector('#hbPanel');
@@ -521,11 +556,22 @@
     ["기타 업무","헌혈·잠복결핵검사","헌혈 연 2회(봉사 4시간) / 신규채용 교직원 잠복결핵검사 1개월 이내 실시(비용 학교지원)",""],
     ["기타 업무","흡연예방","학교흡연예방사업 우수 사례집을 참고하여 행사 운영",""],
 
-    ["참고 사이트","바로가기","학생건강정보센터|http://www.schoolhealth.kr",""],
-    ["참고 사이트","바로가기","국가건강정보포털|https://health.kdca.go.kr/healthinfo/",""],
-    ["참고 사이트","바로가기","질병관리청|http://www.kdca.go.kr",""],
-    ["참고 사이트","바로가기","전북보건교사회|http://www.jbbogun.co.kr/",""],
-    ["참고 사이트","바로가기","전국보건교사회|http://koreanhta.org",""]
+    ["참고 사이트","바로가기","국가교육과정 정보센터|http://ncic.go.kr/","교육과정 고시문서와 관련 자료를 확인할 수 있는 사이트"],
+    ["참고 사이트","바로가기","학생건강정보센터|http://www.schoolhealth.kr","학생 건강검사·건강증진 관련 자료와 통계를 제공하는 사이트"],
+    ["참고 사이트","바로가기","천사방|http://www.1004bang.net","보건교사들이 정보와 자료를 공유하는 커뮤니티 사이트"],
+    ["참고 사이트","바로가기","국가건강정보포털|https://health.kdca.go.kr/healthinfo/","질병관리청이 운영하는 국민 대상 건강정보 포털"],
+    ["참고 사이트","바로가기","질병관리청|http://www.kdca.go.kr","감염병 등 국가 보건정책과 통계를 확인할 수 있는 공식 사이트"],
+    ["참고 사이트","바로가기","젠더온|https://genderon.kigepe.or.kr/","양성평등 교육자료를 제공하는 사이트"],
+    ["참고 사이트","바로가기","김정식허명성의 과학사랑|https://sciencelove.com/","보건교육 등에 활용할 수 있는 과학·건강 자료 블로그"],
+    ["참고 사이트","바로가기","온통|https://www.khepi.or.kr/webzine/on-tong/contents/main.html","한국건강증진개발원이 운영하는 건강증진 웹진"],
+    ["참고 사이트","바로가기","학교안심폰트|https://copyright.keris.or.kr/wft/fntDwnld","학교에서 무료로 사용할 수 있는 저작권 안심 폰트 다운로드 사이트"],
+    ["참고 사이트","바로가기","smallpdf|https://smallpdf.com/kr","PDF 편집·변환 등을 지원하는 온라인 도구"],
+    ["참고 사이트","바로가기","123apps|https://123apps.com/ko/","다양한 파일 변환·편집을 지원하는 온라인 도구 모음"],
+    ["참고 사이트","바로가기","릴리스AI|https://lilys.ai/ko/","영상·음성 내용을 요약해주는 AI 서비스"],
+    ["참고 사이트","바로가기","지식샘터|https://educator.edunet.net/","교원 대상 원격연수를 제공하는 사이트"],
+    ["참고 사이트","바로가기","전북보건교사회|http://www.jbbogun.co.kr/","전라북도 보건교사 모임 사이트"],
+    ["참고 사이트","바로가기","전국보건교사회|http://koreanhta.org","전국 보건교사 협의체 사이트"],
+    ["참고 사이트","바로가기","보건교육포럼|http://www.gsy.or.kr","보건교육 관련 정보와 자료를 공유하는 포럼"]
   ];
 
   let state = { grouped: [], activeIdx: 0, isLive: false, highlights: new Map(), penColor: 'yellow' };
@@ -601,12 +647,18 @@
     } else if (g.cat === '참고 사이트') {
       panelEl.innerHTML = `
         <div class="hb-panel-head"><span class="hb-panel-num">0${state.activeIdx + 1}</span><span class="hb-panel-title">${escapeHtml(g.cat)}</span>${EXPORT_BTN_HTML}</div>
-        <div class="hb-panel-count">${g.subs.reduce((s,sg)=>s+sg.items.length,0)}개 링크</div>
-        <div class="hb-links">` +
+        <div class="hb-panel-count">${g.subs.reduce((s,sg)=>s+sg.items.length,0)}개 사이트</div>
+        <div class="hb-refgrid">` +
         g.subs.flatMap(sg => sg.items).map(it => {
           const [label, url] = it.content.split('|');
           const safeUrl = (url || label || '#').trim();
-          return `<a class="hb-link" href="${escapeAttr(safeUrl)}" target="_blank" rel="noopener">${escapeHtml((label||safeUrl).trim())}</a>`;
+          const title = (label || safeUrl).trim();
+          const desc = it.note ? escapeHtml(it.note) : '';
+          return `<a class="hb-refcard" href="${escapeAttr(safeUrl)}" target="_blank" rel="noopener">
+            <div class="hb-refcard-title">${escapeHtml(title)}</div>
+            ${desc ? `<div class="hb-refcard-desc">${desc}</div>` : ''}
+            <div class="hb-refcard-url">${escapeHtml(safeUrl)}</div>
+          </a>`;
         }).join('') + `</div>`;
     } else {
       panelEl.innerHTML = `
