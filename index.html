@@ -382,6 +382,69 @@
   word-break: break-all;
 }
 
+.hb-navitem-checklist { margin-top: 8px; border-top: 1px dashed #c3d0cb; padding-top: 10px; }
+
+.hb-progress {
+  height: 8px;
+  border-radius: 100px;
+  background: #e2e9e6;
+  overflow: hidden;
+  margin: 4px 0 14px;
+}
+.hb-progress-bar {
+  height: 100%;
+  background: var(--teal);
+  border-radius: 100px;
+  transition: width 0.2s;
+}
+
+.hb-checklist-reset {
+  font-family: var(--sans);
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 6px 11px;
+  border-radius: 7px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink-soft);
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+.hb-checklist-reset:hover { border-color: var(--amber); color: var(--amber); }
+
+.hb-check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink);
+  cursor: pointer;
+}
+.hb-check-item:hover { background: #eef4f2; }
+.hb-check-item input[type="checkbox"] {
+  margin-top: 3px;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--teal);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.hb-check-item.checked .hb-check-text { color: var(--ink-soft); text-decoration: line-through; text-decoration-color: #9db3ae; }
+.hb-check-tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--teal-deep);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 1px 6px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
 .hb-empty {
   text-align: center;
   padding: 60px 20px;
@@ -398,6 +461,35 @@
   color: var(--ink-soft);
   display: flex;
   justify-content: space-between;
+}
+
+#hbPrintView { display: none; }
+.hb-print-h2 {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--teal-deep);
+  margin: 0 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--teal-deep);
+}
+
+@media print {
+  .hb-app { border: none !important; border-radius: 0 !important; background: #fff !important; }
+  .hb-noprint { display: none !important; }
+  .hb-head { background: #fff !important; color: #000 !important; border-bottom: 2px solid #000; padding: 0 0 12px; }
+  .hb-eyebrow, .hb-sub { color: #333 !important; }
+  .hb-title { color: #000 !important; }
+
+  .hb-item:hover { background: none !important; }
+  .hb-item.flag { background: none !important; border-left: 3px solid var(--amber); padding-left: 9px; }
+  .hb-item.highlighted { background: none !important; box-shadow: none !important; border-left: 3px solid #999; padding-left: 9px; }
+  .hb-check-item.checked .hb-check-text { color: #555; }
+
+  .hb-group, .hb-refcard, .hb-figure, .hb-check-item { break-inside: avoid; }
+  .hb-print-section + .hb-print-section { break-before: page; }
+
+  .hb-app.printing-all .hb-body { display: none !important; }
+  .hb-app.printing-all #hbPrintView { display: block !important; padding: 16px 4px 0; }
 }
 
 @media (max-width: 640px) {
@@ -446,15 +538,16 @@
     <div class="hb-eyebrow">School Health · 학생건강증진 업무 매뉴얼</div>
     <div class="hb-title">보건 주요 업무 가이드</div>
     <div class="hb-sub">신규 보건교사를 위한 연간 업무 인덱스</div>
-    <div class="hb-meta-row">
+    <div class="hb-meta-row hb-noprint">
       <span class="hb-badge demo" id="hbStatusBadge">샘플 데이터 표시 중</span>
       <span class="hb-badge" id="hbUpdatedBadge">마지막 업데이트 —</span>
       <button class="hb-btn primary" id="hbRefresh" type="button">새로고침</button>
+      <button class="hb-btn" id="hbPrintAll" type="button">🖨 전체 인쇄/PDF</button>
     </div>
   </div>
 
   <div class="hb-body">
-    <div class="hb-nav">
+    <div class="hb-nav hb-noprint">
       <input class="hb-search" id="hbSearch" type="text" placeholder="업무 내용 검색...">
       <div id="hbNavList"></div>
       <div class="hb-pen-row" id="hbPenRow">
@@ -469,15 +562,17 @@
     <div class="hb-panel" id="hbPanel"></div>
   </div>
 
-  <div class="hb-foot">
+  <div class="hb-foot hb-noprint">
     <span id="hbFootLeft">학생건강증진교육 컨설팅</span>
     <span id="hbFootRight">항목 0개</span>
   </div>
 
-  <div class="hb-lightbox" id="hbLightbox">
+  <div class="hb-lightbox hb-noprint" id="hbLightbox">
     <button class="hb-lightbox-close" id="hbLightboxClose" type="button">✕</button>
     <img id="hbLightboxImg" src="" alt="">
   </div>
+
+  <div id="hbPrintView"></div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -493,7 +588,7 @@
   // 비워두면 화면의 "구글 시트 연결" 버튼으로 런타임에 연결할 수 있습니다.
   // =========================================================
   const CONFIG = {
-    SOURCE_URL: 'https://script.google.com/macros/s/AKfycbwzlMUM-GfTNH5SitFRUS9RU1NCoIbwnMrD_vk2tcKfDlo96QDKN6ovrjsZbNmoNU5x/exec'  // 예: 'https://script.google.com/macros/s/AKfycb.../exec'
+    SOURCE_URL: 'https://script.google.com/macros/s/AKfycbyMukPMSTZCbZsjAL17xFtREMnBnK7ng5uendR0OxT8eDpnkHKrftXxoOI4Qphvpky-/exec'  // 예: 'https://script.google.com/macros/s/AKfycb.../exec'
   };
 
   const panelEl = root.querySelector('#hbPanel');
@@ -574,7 +669,43 @@
     ["참고 사이트","바로가기","보건교육포럼|http://www.gsy.or.kr","보건교육 관련 정보와 자료를 공유하는 포럼"]
   ];
 
-  let state = { grouped: [], activeIdx: 0, isLive: false, highlights: new Map(), penColor: 'yellow' };
+  // 업무요약 체크리스트 폴백 데이터 (구분, 체크 항목, 비고=시기)
+  const CHECKLIST_FALLBACK = [
+    ["보건계획","학교보건 연간계획 수립 완료 (3월 말까지)","3월"],
+    ["보건계획","보건교육 학년별 17시간 이상 편성 확인","3월"],
+    ["보건계획","약물오남용예방교육 연간 7시간 편성 확인","3월"],
+    ["보건계획","감염병예방교육 연간 4시간 이상 편성 확인","3월"],
+    ["보건계획","양성평등교육 학년별 15시간 편성 확인","3월"],
+    ["보건계획","자동심장충격기(AED)·심폐소생술 관리계획 수립","3월"],
+
+    ["건강요주의자 관리","학년 초 전교생 건강요주의자 조사 완료","학기초"],
+    ["건강요주의자 관리","응급처치 동의서(서면) 수합 완료","학기초"],
+    ["건강요주의자 관리","건강요주의자 명단 공유범위 교장·교감 확인 (개인정보 유의)","학기초"],
+
+    ["건강검진 및 별도검사","1학년 건강검진기관 선정·계약 완료","학기초"],
+    ["건강검진 및 별도검사","건강검진 안내 가정통신문 발송","학기초"],
+    ["건강검진 및 별도검사","건강검진 결과 나이스-건강기록부 입력 완료","검진 후"],
+    ["건강검진 및 별도검사","2·3학년 소변검사·흉부X-ray 일정 공문 발송","연중"],
+
+    ["교직원 연수","4대폭력 예방교육(성희롱·성폭력·성매매) 실시 및 실적보고","연중"],
+    ["교직원 연수","고위직 대면교육 이수 확인","연중"],
+    ["교직원 연수","심폐소생술 교육(실습 3시간) 실시","연중"],
+    ["교직원 연수","감염병 예방교육·모의훈련 실시","연중"],
+
+    ["감염병 관리","법정감염병 대응 절차(등교중지·나이스 보고) 숙지","연중"],
+    ["감염병 관리","방역물품(마스크·손소독제 등) 비축 기준 점검","학기초"],
+
+    ["기타 업무","보건일지 개인정보동의서 수합","학기초"],
+    ["기타 업무","헌혈 일정 적십자와 협의 (연 2회)","연중"],
+    ["기타 업무","신규채용 교직원 잠복결핵검사 실시 (신규채용 후 1개월 이내)","수시"],
+    ["기타 업무","흡연예방 행사 운영 계획 수립","연중"]
+  ];
+
+  let state = {
+    grouped: [], activeIdx: 0, isLive: false,
+    highlights: new Map(), penColor: 'yellow',
+    view: 'category', checklist: [], checklistChecked: new Set()
+  };
 
   // ---------- tiny CSV parser (handles quoted fields with commas/newlines) ----------
   function parseCSV(text) {
@@ -628,18 +759,47 @@
     return groups.reduce((s, g) => s + g.subs.reduce((s2, sg) => s2 + sg.items.length, 0), 0);
   }
 
-  const EXPORT_BTN_HTML = `<button class="hb-export-btn" type="button" data-export="1">🖼 이미지로 저장</button>`;
+  function buildChecklist(rows) {
+    // rows: [구분, 체크 항목, 비고]
+    const map = new Map();
+    rows.forEach(r => {
+      const cat = (r[0] || '').trim();
+      const text = (r[1] || '').trim();
+      const note = (r[2] || '').trim();
+      if (!cat || !text) return;
+      if (!map.has(cat)) map.set(cat, []);
+      map.get(cat).push({ text, note, key: hashKey('checklist|' + cat + '|' + text) });
+    });
+    return Array.from(map.entries()).map(([cat, items]) => ({ cat, items }));
+  }
+
+  function totalChecklistItems() {
+    return state.checklist.reduce((s, g) => s + g.items.length, 0);
+  }
+
+  const EXPORT_BTN_HTML = `<button class="hb-export-btn hb-noprint" type="button" data-export="1">🖼 이미지로 저장</button>`;
 
   function render() {
     const navList = root.querySelector('#hbNavList');
     navList.innerHTML = '';
     state.grouped.forEach((g, idx) => {
       const el = document.createElement('div');
-      el.className = 'hb-navitem' + (idx === state.activeIdx ? ' active' : '');
+      el.className = 'hb-navitem' + (state.view === 'category' && idx === state.activeIdx ? ' active' : '');
       el.innerHTML = `<span class="hb-navnum">0${idx + 1}</span><span class="hb-navlabel">${escapeHtml(g.cat)}</span>`;
-      el.addEventListener('click', () => { state.activeIdx = idx; render(); });
+      el.addEventListener('click', () => { state.view = 'category'; state.activeIdx = idx; render(); });
       navList.appendChild(el);
     });
+    const clEl = document.createElement('div');
+    clEl.className = 'hb-navitem hb-navitem-checklist' + (state.view === 'checklist' ? ' active' : '');
+    clEl.innerHTML = `<span class="hb-navnum">✓</span><span class="hb-navlabel">업무요약 체크리스트</span>`;
+    clEl.addEventListener('click', () => { state.view = 'checklist'; render(); });
+    navList.appendChild(clEl);
+
+    if (state.view === 'checklist') {
+      panelEl.innerHTML = buildChecklistHTML();
+      root.querySelector('#hbFootRight').textContent = `체크리스트 ${totalChecklistItems()}개 · ${state.checklistChecked.size}개 완료`;
+      return;
+    }
 
     const g = state.grouped[state.activeIdx];
     if (!g) {
@@ -695,12 +855,36 @@
     root.querySelector('#hbFootRight').textContent = `항목 ${totalItems(state.grouped)}개`;
   }
 
+  function buildChecklistHTML() {
+    const total = totalChecklistItems();
+    const done = state.checklistChecked.size;
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    return `
+      <div class="hb-panel-head"><span class="hb-panel-num">✓</span><span class="hb-panel-title">업무요약 체크리스트</span>${EXPORT_BTN_HTML}</div>
+      <div class="hb-panel-count">${done}/${total}개 완료 (${pct}%)</div>
+      <div class="hb-progress"><div class="hb-progress-bar" style="width:${pct}%"></div></div>
+      <button class="hb-checklist-reset hb-noprint" id="hbChecklistReset" type="button">체크 초기화</button>
+      ` + state.checklist.map(g => `
+        <div class="hb-group">
+          <div class="hb-group-title">${escapeHtml(g.cat)}</div>
+          ${g.items.map(it => {
+            const checked = state.checklistChecked.has(it.key);
+            return `
+            <label class="hb-check-item ${checked ? 'checked' : ''}" data-check-key="${it.key}">
+              <input type="checkbox" ${checked ? 'checked' : ''}>
+              <span class="hb-check-text">${linkify(escapeHtml(it.text))}${it.note ? `<span class="hb-check-tag">${escapeHtml(it.note)}</span>` : ''}</span>
+            </label>`;
+          }).join('')}
+        </div>`).join('');
+  }
+
   function applySearch(query) {
     const q = query.trim().toLowerCase();
     if (!q) { state.grouped = buildGroups(state._rows); state.activeIdx = Math.min(state.activeIdx, Math.max(state.grouped.length-1,0)); render(); return; }
     const filteredRows = state._rows.filter(r => (r[2]||'').toLowerCase().includes(q) || (r[1]||'').toLowerCase().includes(q));
     state.grouped = buildGroups(filteredRows);
     state.activeIdx = 0;
+    state.view = 'category';
     render();
   }
 
@@ -734,8 +918,7 @@
       alert('이미지 저장 기능을 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
       return;
     }
-    const g = state.grouped[state.activeIdx];
-    const label = g ? g.cat : 'export';
+    const label = state.view === 'checklist' ? '업무요약체크리스트' : ((state.grouped[state.activeIdx] && state.grouped[state.activeIdx].cat) || 'export');
     if (btn) { btn.disabled = true; btn.textContent = '저장 중...'; }
     html2canvas(panelEl, { backgroundColor: '#ffffff', scale: 2, useCORS: true }).then((canvas) => {
       const a = document.createElement('a');
@@ -749,11 +932,13 @@
     });
   }
 
-  function loadData(rows, isLive) {
+  function loadData(rows, isLive, checklistRows) {
     state._rows = rows;
     state.grouped = buildGroups(rows);
-    state.activeIdx = 0;
+    if (state.activeIdx >= state.grouped.length) state.activeIdx = 0;
     state.isLive = isLive;
+    const cl = (checklistRows && checklistRows.length) ? checklistRows : CHECKLIST_FALLBACK;
+    state.checklist = buildChecklist(cl);
     root.querySelector('#hbStatusBadge').textContent = isLive ? '구글 시트 연결됨' : '샘플 데이터 표시 중';
     root.querySelector('#hbStatusBadge').className = 'hb-badge ' + (isLive ? 'live' : 'demo');
     root.querySelector('#hbUpdatedBadge').textContent = '마지막 업데이트 ' + new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
@@ -783,16 +968,16 @@
     if (!res.ok) throw new Error('웹앱 응답 오류 (' + res.status + ')');
     const data = await res.json();
     if (!data || !Array.isArray(data.rows)) throw new Error('응답 형식이 올바르지 않습니다.');
-    return data.rows;
+    return { rows: data.rows, checklist: Array.isArray(data.checklist) ? data.checklist : [] };
   }
 
   async function loadFromUrl(rawUrl) {
     const url = rawUrl.trim();
     if (isGasUrl(url)) {
-      const rows = await fetchGasJson(url);
+      const data = await fetchGasJson(url);
       currentSourceUrl = url;
       currentSourceType = 'gas';
-      return rows;
+      return data;
     }
     const id = extractSheetId(url);
     if (!id) throw new Error('올바른 링크가 아닙니다. (구글 시트 링크 또는 Apps Script 웹앱 URL)');
@@ -801,14 +986,14 @@
     const rows = await fetchSheet(csvUrl);
     currentSourceUrl = csvUrl;
     currentSourceType = 'sheet';
-    return rows;
+    return { rows, checklist: [] };
   }
 
   async function connectFromConfig() {
     if (!CONFIG.SOURCE_URL || !CONFIG.SOURCE_URL.trim()) return;
     try {
-      const rows = await loadFromUrl(CONFIG.SOURCE_URL.trim());
-      loadData(rows, true);
+      const data = await loadFromUrl(CONFIG.SOURCE_URL.trim());
+      loadData(data.rows, true, data.checklist);
     } catch (e) {
       console.error('CONFIG.SOURCE_URL 연결 실패:', e);
     }
@@ -817,13 +1002,15 @@
   root.querySelector('#hbRefresh').addEventListener('click', async () => {
     if (currentSourceUrl) {
       try {
-        const rows = currentSourceType === 'gas' ? await fetchGasJson(currentSourceUrl) : await fetchSheet(currentSourceUrl);
-        loadData(rows, true);
+        const data = currentSourceType === 'gas'
+          ? await fetchGasJson(currentSourceUrl)
+          : { rows: await fetchSheet(currentSourceUrl), checklist: [] };
+        loadData(data.rows, true, data.checklist);
       } catch (e) { /* keep last good data */ }
     } else if (CONFIG.SOURCE_URL && CONFIG.SOURCE_URL.trim()) {
       connectFromConfig();
     } else {
-      loadData(FALLBACK_ROWS, false);
+      loadData(FALLBACK_ROWS, false, CHECKLIST_FALLBACK);
     }
   });
   root.querySelector('#hbSearch').addEventListener('input', (e) => applySearch(e.target.value));
@@ -857,8 +1044,15 @@
   lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
 
-  // 하이라이트 토글(색상 적용) + 이미지 확대 + 이미지 저장 버튼: innerHTML이 다시 그려져도 계속 동작하도록 이벤트 위임
+  // 하이라이트 토글(색상 적용) + 이미지 확대 + 이미지 저장 + 체크리스트 초기화: innerHTML이 다시 그려져도 계속 동작하도록 이벤트 위임
   panelEl.addEventListener('click', (e) => {
+    const resetBtn = e.target.closest('#hbChecklistReset');
+    if (resetBtn) {
+      state.checklistChecked.clear();
+      render();
+      return;
+    }
+
     const exportBtn = e.target.closest('[data-export]');
     if (exportBtn) { exportCurrentPanel(exportBtn); return; }
 
@@ -882,8 +1076,79 @@
     }
   });
 
+  // 체크리스트 체크박스: 전체 재렌더 없이 카운트/진행률만 갱신 (체크 상태는 저장되지 않고 화면 세션에서만 유지)
+  panelEl.addEventListener('change', (e) => {
+    const cb = e.target.closest('input[type="checkbox"]');
+    if (!cb) return;
+    const label = cb.closest('.hb-check-item');
+    if (!label) return;
+    const key = label.dataset.checkKey;
+    if (cb.checked) state.checklistChecked.add(key); else state.checklistChecked.delete(key);
+    label.classList.toggle('checked', cb.checked);
+
+    const total = totalChecklistItems();
+    const done = state.checklistChecked.size;
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    const countEl = panelEl.querySelector('.hb-panel-count');
+    if (countEl) countEl.textContent = `${done}/${total}개 완료 (${pct}%)`;
+    const barEl = panelEl.querySelector('.hb-progress-bar');
+    if (barEl) barEl.style.width = pct + '%';
+    root.querySelector('#hbFootRight').textContent = `체크리스트 ${total}개 · ${done}개 완료`;
+  });
+
+  // ---------- 전체 매뉴얼 인쇄/PDF ----------
+  function printableSectionHTML(g) {
+    if (g.cat === '참고 사이트') {
+      return `<div class="hb-refgrid">` + g.subs.flatMap(sg => sg.items).map(it => {
+        const [label, url] = it.content.split('|');
+        const safeUrl = (url || label || '#').trim();
+        const title = (label || safeUrl).trim();
+        const desc = it.note ? escapeHtml(it.note) : '';
+        return `<div class="hb-refcard"><div class="hb-refcard-title">${escapeHtml(title)}</div>${desc ? `<div class="hb-refcard-desc">${desc}</div>` : ''}<div class="hb-refcard-url">${escapeHtml(safeUrl)}</div></div>`;
+      }).join('') + `</div>`;
+    }
+    return g.subs.map(sg => {
+      const asset = IMAGE_ASSETS[g.cat + '|' + sg.sub];
+      let figureHtml = '';
+      if (asset && Array.isArray(asset.images) && asset.images.length) {
+        figureHtml = `<div class="hb-figure">${asset.images.map(img => `<img src="${escapeAttr(img.src)}" alt="${escapeAttr(img.alt || '')}">`).join('')}${asset.caption ? `<div class="hb-figure-cap">${escapeHtml(asset.caption)}</div>` : ''}${asset.source ? `<div class="hb-figure-src">${escapeHtml(asset.source)}</div>` : ''}</div>`;
+      }
+      return `<div class="hb-group"><div class="hb-group-title">${escapeHtml(sg.sub || '기타')}</div>${sg.items.map(it => `<div class="hb-item ${it.note ? 'flag' : ''}"><span class="hb-mark">${it.note ? '!' : '·'}</span><span>${linkify(escapeHtml(it.content))}${it.note ? `<span class="hb-item-note">${escapeHtml(it.note)}</span>` : ''}</span></div>`).join('')}${figureHtml}</div>`;
+    }).join('');
+  }
+
+  function checklistPrintHTML() {
+    return state.checklist.map(g => `
+      <div class="hb-group">
+        <div class="hb-group-title">${escapeHtml(g.cat)}</div>
+        ${g.items.map(it => `
+          <div class="hb-item"><span class="hb-mark">☐</span><span>${linkify(escapeHtml(it.text))}${it.note ? `<span class="hb-item-note">${escapeHtml(it.note)}</span>` : ''}</span></div>
+        `).join('')}
+      </div>`).join('');
+  }
+
+  function printFullManual() {
+    const view = root.querySelector('#hbPrintView');
+    let html = '';
+    state.grouped.forEach((g, idx) => {
+      html += `<div class="hb-print-section"><h2 class="hb-print-h2">0${idx + 1}. ${escapeHtml(g.cat)}</h2>${printableSectionHTML(g)}</div>`;
+    });
+    html += `<div class="hb-print-section"><h2 class="hb-print-h2">✓ 업무요약 체크리스트</h2>${checklistPrintHTML()}</div>`;
+    view.innerHTML = html;
+    root.classList.add('printing-all');
+    setTimeout(() => { window.print(); }, 60);
+  }
+
+  window.addEventListener('afterprint', () => {
+    root.classList.remove('printing-all');
+    const view = root.querySelector('#hbPrintView');
+    if (view) view.innerHTML = '';
+  });
+
+  root.querySelector('#hbPrintAll').addEventListener('click', printFullManual);
+
   // 초기 로드: 샘플 데이터를 먼저 보여주고, CONFIG.SOURCE_URL이 설정되어 있으면 실시간 데이터로 교체
-  loadData(FALLBACK_ROWS, false);
+  loadData(FALLBACK_ROWS, false, CHECKLIST_FALLBACK);
   connectFromConfig();
 })();
 </script>
