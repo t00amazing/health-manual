@@ -15,6 +15,9 @@
   --mono: 'JetBrains Mono', monospace;
   --sans: 'Pretendard Variable', Pretendard, -apple-system, sans-serif;
 
+  container-type: inline-size;
+  container-name: hbapp;
+
   font-family: var(--sans);
   color: var(--ink);
   background: var(--paper);
@@ -141,7 +144,7 @@
   line-height: 1.3;
 }
 
-.hb-panel { flex: 1; padding: 22px 26px; overflow: hidden; }
+.hb-panel { flex: 1; min-width: 0; padding: 22px 26px; overflow: hidden; }
 
 .hb-panel-head {
   display: flex;
@@ -511,6 +514,54 @@
     padding: 10px;
   }
   .hb-search { margin-bottom: 8px; font-size: 16px; } /* 16px 이상: iOS 자동확대 방지 */
+  #hbNavList { display: flex; overflow-x: auto; gap: 6px; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+  .hb-navitem { flex-shrink: 0; margin-bottom: 0; white-space: nowrap; }
+  .hb-clear-btn { width: auto; margin-top: 8px; }
+  .hb-pen-row { margin-top: 8px; }
+  .hb-hint { display: none; }
+  .hb-lightbox { padding: 12px; }
+  .hb-lightbox-close { top: 10px; right: 10px; width: 34px; height: 34px; }
+
+  .hb-panel { padding: 16px; }
+  .hb-panel-title { font-size: 16px; }
+  .hb-panel-head { gap: 8px; }
+  .hb-export-btn { font-size: 11px; padding: 6px 9px; }
+  .hb-item { font-size: 13px; padding: 9px 8px; }
+  .hb-figure { margin-left: 0; }
+  .hb-links { gap: 6px; }
+  .hb-link { font-size: 12px; padding: 7px 10px; }
+  .hb-refgrid { grid-template-columns: 1fr; }
+
+  .hb-foot { padding: 8px 16px; flex-direction: column; gap: 2px; }
+}
+
+/* ---------- 컨테이너 폭 기준 반응형 (기기와 무관하게 실제 렌더링 폭 기준) ---------- */
+@container hbapp (max-width: 900px) {
+  .hb-nav { width: 180px; padding: 12px 8px; }
+  .hb-panel { padding: 18px 20px; }
+  .hb-navlabel { font-size: 12.5px; }
+  .hb-panel-title { font-size: 17px; }
+}
+
+@container hbapp (max-width: 640px) {
+  .hb-app { border-radius: 0; }
+  .hb-head { padding: 18px 16px 16px; }
+  .hb-title { font-size: 19px; }
+  .hb-sub { font-size: 12px; }
+  .hb-meta-row { gap: 6px; }
+  .hb-badge { font-size: 10px; padding: 4px 8px; }
+  .hb-btn { font-size: 12px; padding: 7px 11px; }
+
+  .hb-body { flex-direction: column; min-height: 0; }
+  .hb-nav {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+    padding: 10px;
+  }
+  .hb-search { margin-bottom: 8px; font-size: 16px; }
   #hbNavList { display: flex; overflow-x: auto; gap: 6px; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
   .hb-navitem { flex-shrink: 0; margin-bottom: 0; white-space: nowrap; }
   .hb-clear-btn { width: auto; margin-top: 8px; }
