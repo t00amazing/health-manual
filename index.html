@@ -498,11 +498,11 @@
 @media (max-width: 640px) {
   .hb-app { border-radius: 0; }
   .hb-head { padding: 18px 16px 16px; }
-  .hb-title { font-size: 19px; }
-  .hb-sub { font-size: 12px; }
+  .hb-title { font-size: 21px; }
+  .hb-sub { font-size: 13px; }
   .hb-meta-row { gap: 6px; }
-  .hb-badge { font-size: 10px; padding: 4px 8px; }
-  .hb-btn { font-size: 12px; padding: 7px 11px; }
+  .hb-badge { font-size: 11px; padding: 5px 9px; }
+  .hb-btn { font-size: 13.5px; padding: 8px 12px; }
 
   .hb-body { flex-direction: column; min-height: 0; }
   .hb-nav {
@@ -513,26 +513,42 @@
     border-bottom: 1px solid var(--line);
     padding: 10px;
   }
-  .hb-search { margin-bottom: 8px; font-size: 16px; } /* 16px 이상: iOS 자동확대 방지 */
+  .hb-search { margin-bottom: 8px; font-size: 16px; padding: 10px 12px; } /* 16px 이상: iOS 자동확대 방지 */
   #hbNavList { display: flex; overflow-x: auto; gap: 6px; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
-  .hb-navitem { flex-shrink: 0; margin-bottom: 0; white-space: nowrap; }
-  .hb-clear-btn { width: auto; margin-top: 8px; }
+  .hb-navitem { flex-shrink: 0; margin-bottom: 0; white-space: nowrap; padding: 11px 12px; }
+  .hb-navlabel { font-size: 14.5px; }
+  .hb-navnum { font-size: 12px; }
+  .hb-clear-btn { width: auto; margin-top: 8px; font-size: 13px; padding: 9px 10px; }
   .hb-pen-row { margin-top: 8px; }
+  .hb-pen-label { font-size: 12px; }
+  .hb-pen-swatch { width: 26px; height: 26px; }
   .hb-hint { display: none; }
   .hb-lightbox { padding: 12px; }
   .hb-lightbox-close { top: 10px; right: 10px; width: 34px; height: 34px; }
 
-  .hb-panel { padding: 16px; }
-  .hb-panel-title { font-size: 16px; }
+  .hb-panel { padding: 18px 16px; }
+  .hb-panel-title { font-size: 19px; }
+  .hb-panel-num { font-size: 14px; }
+  .hb-panel-count { font-size: 13px; }
   .hb-panel-head { gap: 8px; }
-  .hb-export-btn { font-size: 11px; padding: 6px 9px; }
-  .hb-item { font-size: 13px; padding: 9px 8px; }
+  .hb-export-btn { font-size: 12.5px; padding: 7px 11px; }
+  .hb-group-title { font-size: 15px; }
+  .hb-item { font-size: 15px; line-height: 1.65; padding: 11px 10px; }
+  .hb-item-note { font-size: 11.5px; }
+  .hb-check-item { font-size: 15px; line-height: 1.65; padding: 11px 10px; }
+  .hb-check-tag { font-size: 11px; }
+  .hb-checklist-reset { font-size: 12.5px; padding: 8px 12px; }
   .hb-figure { margin-left: 0; }
+  .hb-figure-cap { font-size: 11.5px; }
+  .hb-figure-src { font-size: 11px; }
   .hb-links { gap: 6px; }
-  .hb-link { font-size: 12px; padding: 7px 10px; }
+  .hb-link { font-size: 13.5px; padding: 9px 12px; }
   .hb-refgrid { grid-template-columns: 1fr; }
+  .hb-refcard-title { font-size: 15px; }
+  .hb-refcard-desc { font-size: 13.5px; }
+  .hb-refcard-url { font-size: 11.5px; }
 
-  .hb-foot { padding: 8px 16px; flex-direction: column; gap: 2px; }
+  .hb-foot { padding: 8px 16px; flex-direction: column; gap: 2px; font-size: 11px; }
 }
 
 /* ---------- 컨테이너 폭 기준 반응형 (기기와 무관하게 실제 렌더링 폭 기준) ---------- */
@@ -546,11 +562,11 @@
 @container hbapp (max-width: 640px) {
   .hb-app { border-radius: 0; }
   .hb-head { padding: 18px 16px 16px; }
-  .hb-title { font-size: 19px; }
-  .hb-sub { font-size: 12px; }
+  .hb-title { font-size: 21px; }
+  .hb-sub { font-size: 13px; }
   .hb-meta-row { gap: 6px; }
-  .hb-badge { font-size: 10px; padding: 4px 8px; }
-  .hb-btn { font-size: 12px; padding: 7px 11px; }
+  .hb-badge { font-size: 11px; padding: 5px 9px; }
+  .hb-btn { font-size: 13.5px; padding: 8px 12px; }
 
   .hb-body { flex-direction: column; min-height: 0; }
   .hb-nav {
@@ -561,26 +577,42 @@
     border-bottom: 1px solid var(--line);
     padding: 10px;
   }
-  .hb-search { margin-bottom: 8px; font-size: 16px; }
+  .hb-search { margin-bottom: 8px; font-size: 16px; padding: 10px 12px; }
   #hbNavList { display: flex; overflow-x: auto; gap: 6px; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
-  .hb-navitem { flex-shrink: 0; margin-bottom: 0; white-space: nowrap; }
-  .hb-clear-btn { width: auto; margin-top: 8px; }
+  .hb-navitem { flex-shrink: 0; margin-bottom: 0; white-space: nowrap; padding: 11px 12px; }
+  .hb-navlabel { font-size: 14.5px; }
+  .hb-navnum { font-size: 12px; }
+  .hb-clear-btn { width: auto; margin-top: 8px; font-size: 13px; padding: 9px 10px; }
   .hb-pen-row { margin-top: 8px; }
+  .hb-pen-label { font-size: 12px; }
+  .hb-pen-swatch { width: 26px; height: 26px; }
   .hb-hint { display: none; }
   .hb-lightbox { padding: 12px; }
   .hb-lightbox-close { top: 10px; right: 10px; width: 34px; height: 34px; }
 
-  .hb-panel { padding: 16px; }
-  .hb-panel-title { font-size: 16px; }
+  .hb-panel { padding: 18px 16px; }
+  .hb-panel-title { font-size: 19px; }
+  .hb-panel-num { font-size: 14px; }
+  .hb-panel-count { font-size: 13px; }
   .hb-panel-head { gap: 8px; }
-  .hb-export-btn { font-size: 11px; padding: 6px 9px; }
-  .hb-item { font-size: 13px; padding: 9px 8px; }
+  .hb-export-btn { font-size: 12.5px; padding: 7px 11px; }
+  .hb-group-title { font-size: 15px; }
+  .hb-item { font-size: 15px; line-height: 1.65; padding: 11px 10px; }
+  .hb-item-note { font-size: 11.5px; }
+  .hb-check-item { font-size: 15px; line-height: 1.65; padding: 11px 10px; }
+  .hb-check-tag { font-size: 11px; }
+  .hb-checklist-reset { font-size: 12.5px; padding: 8px 12px; }
   .hb-figure { margin-left: 0; }
+  .hb-figure-cap { font-size: 11.5px; }
+  .hb-figure-src { font-size: 11px; }
   .hb-links { gap: 6px; }
-  .hb-link { font-size: 12px; padding: 7px 10px; }
+  .hb-link { font-size: 13.5px; padding: 9px 12px; }
   .hb-refgrid { grid-template-columns: 1fr; }
+  .hb-refcard-title { font-size: 15px; }
+  .hb-refcard-desc { font-size: 13.5px; }
+  .hb-refcard-url { font-size: 11.5px; }
 
-  .hb-foot { padding: 8px 16px; flex-direction: column; gap: 2px; }
+  .hb-foot { padding: 8px 16px; flex-direction: column; gap: 2px; font-size: 11px; }
 }
 </style>
 
@@ -629,6 +661,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script>
+// 일부 모바일 웹뷰가 데스크톱 폭 기준으로 렌더링한 뒤 축소해서 보여주는 문제(글씨가
+// 작게 보여 확대해야 하는 현상)를 막기 위해, 뷰포트 메타태그가 없으면 직접 추가합니다.
+(function ensureViewportMeta() {
+  if (!document.querySelector('meta[name="viewport"]')) {
+    var m = document.createElement('meta');
+    m.name = 'viewport';
+    m.content = 'width=device-width, initial-scale=1, maximum-scale=1';
+    document.head.appendChild(m);
+  }
+})();
+
 (function () {
   const root = document.getElementById('hbApp');
 
